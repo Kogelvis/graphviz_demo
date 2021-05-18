@@ -1,0 +1,117 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1880;
+            height: 920;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "core1-master", "label": "core1-master", "shape": "dot", "title": "\u003cb\u003ecore1-master\u003c/b\u003e"}, {"id": "core1-leaf", "label": "core1-leaf", "shape": "dot", "title": "\u003cb\u003ecore1-leaf\u003c/b\u003e"}, {"id": "tenant1-leaf", "label": "tenant1-leaf", "shape": "dot", "title": "\u003cb\u003etenant1-leaf\u003c/b\u003e"}, {"id": "tenant1-node1", "label": "tenant1-node1", "shape": "dot", "title": "\u003cb\u003etenant1-node1\u003c/b\u003e"}, {"id": "tenant1-node2", "label": "tenant1-node2", "shape": "dot", "title": "\u003cb\u003etenant1-node2\u003c/b\u003e"}, {"id": "tenant1-node3", "label": "tenant1-node3", "shape": "dot", "title": "\u003cb\u003etenant1-node3\u003c/b\u003e"}, {"id": "tenant2-leaf", "label": "tenant2-leaf", "shape": "dot", "title": "\u003cb\u003etenant2-leaf\u003c/b\u003e"}, {"id": "tenant2-node1", "label": "tenant2-node1", "shape": "dot", "title": "\u003cb\u003etenant2-node1\u003c/b\u003e"}, {"id": "tenant2-node2", "label": "tenant2-node2", "shape": "dot", "title": "\u003cb\u003etenant2-node2\u003c/b\u003e"}, {"id": "tenant2-node3", "label": "tenant2-node3", "shape": "dot", "title": "\u003cb\u003etenant2-node3\u003c/b\u003e"}, {"id": "tenant3-leaf", "label": "tenant3-leaf", "shape": "dot", "title": "\u003cb\u003etenant3-leaf\u003c/b\u003e"}, {"id": "tenant3-node1", "label": "tenant3-node1", "shape": "dot", "title": "\u003cb\u003etenant3-node1\u003c/b\u003e"}, {"id": "tenant3-node2", "label": "tenant3-node2", "shape": "dot", "title": "\u003cb\u003etenant3-node2\u003c/b\u003e"}, {"id": "tenant3-node3", "label": "tenant3-node3", "shape": "dot", "title": "\u003cb\u003etenant3-node3\u003c/b\u003e"}, {"id": "tenant4-leaf", "label": "tenant4-leaf", "shape": "dot", "title": "\u003cb\u003etenant4-leaf\u003c/b\u003e"}, {"id": "tenant4-node1", "label": "tenant4-node1", "shape": "dot", "title": "\u003cb\u003etenant4-node1\u003c/b\u003e"}, {"id": "tenant4-node2", "label": "tenant4-node2", "shape": "dot", "title": "\u003cb\u003etenant4-node2\u003c/b\u003e"}, {"id": "tenant4-node3", "label": "tenant4-node3", "shape": "dot", "title": "\u003cb\u003etenant4-node3\u003c/b\u003e"}]);
+        edges = new vis.DataSet([{"from": "core1-leaf", "to": "core1-master"}, {"from": "core1-master", "to": "tenant1-leaf"}, {"from": "tenant1-leaf", "to": "tenant1-node1"}, {"from": "tenant1-leaf", "to": "tenant1-node2"}, {"from": "tenant1-leaf", "to": "tenant1-node3"}, {"from": "core1-master", "to": "tenant2-leaf"}, {"from": "tenant2-leaf", "to": "tenant2-node1"}, {"from": "tenant2-leaf", "to": "tenant2-node2"}, {"from": "tenant2-leaf", "to": "tenant2-node3"}, {"from": "core1-master", "to": "tenant3-leaf"}, {"from": "tenant3-leaf", "to": "tenant3-node1"}, {"from": "tenant3-leaf", "to": "tenant3-node2"}, {"from": "tenant3-leaf", "to": "tenant3-node3"}, {"from": "core1-master", "to": "tenant4-leaf"}, {"from": "tenant4-leaf", "to": "tenant4-node1"}, {"from": "tenant4-leaf", "to": "tenant4-node2"}, {"from": "tenant4-leaf", "to": "tenant4-node3"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.005,
+            "damping": 0.4,
+            "gravitationalConstant": -100,
+            "springConstant": 0.15,
+            "springLength": 250
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
