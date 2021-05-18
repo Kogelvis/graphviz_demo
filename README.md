@@ -1,3 +1,3 @@
 # Usage:
-pip install -r requirements.txt
-python map.py
+- `pip install -r requirements.txt`
+- `python map.py`
